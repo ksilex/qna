@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:answer) { create(:answer) }
+
   describe 'GET #new' do
     before { get :new, params: { question_id: answer.question } }
 
@@ -74,16 +75,14 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  # describe 'DELETE #destroy' do
-  #   let!(:question) { create(:question) }
+  describe 'DELETE #destroy' do
+    it 'deletes the answer' do
+      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+    end
 
-  #   it 'deletes the question' do
-  #     expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
-  #   end
-
-  #   it 'redirects to index' do
-  #     delete :destroy, params: { id: question }
-  #     expect(response).to redirect_to questions_path
-  #   end
-  # end
+    it 'redirects to associated question' do
+      delete :destroy, params: { id: answer }
+      expect(response).to redirect_to answer.question
+    end
+  end
 end
