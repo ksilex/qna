@@ -1,0 +1,4 @@
+- resource&.errors&.full_messages&.each do |error|
+  = content_tag :div, class: "alert alert-danger alert-dismissible fade show" do
+    = error
+    %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", type: "button"}

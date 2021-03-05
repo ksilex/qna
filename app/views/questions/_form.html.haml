@@ -1,0 +1,5 @@
+= render "shared/errors", resource: question
+= form_with model: question, local: true do |form|
+  = form.text_field :title, placeholder: true
+  = form.text_area :body, placeholder: true
+  = form.submit 'Ask'
