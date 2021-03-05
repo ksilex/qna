@@ -16,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves a new answer in the database' do
         expect { post :create, params: { answer: attributes_for(:answer),
                                          question_id: answer.question }
-        }.to change(Answer, :count).by(1)
+        }.to change(answer.question.answers, :count).by(1)
       end
 
       it 'redirects to associated question' do
@@ -29,7 +29,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not save the answer' do
         expect { post :create, params: { answer: attributes_for(:answer, :invalid_answer),
                                          question_id: answer.question }
-        }.to_not change(Answer, :count)
+        }.to_not change(answer.question.answers, :count)
       end
 
       it 're-renders new view' do
@@ -77,7 +77,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'deletes the answer' do
-      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+      expect { delete :destroy, params: { id: answer } }.to change(answer.question.answers, :count).by(-1)
     end
 
     it 'redirects to associated question' do
