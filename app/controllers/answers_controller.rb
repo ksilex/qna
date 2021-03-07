@@ -1,11 +1,12 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   def new
   end
 
   def create
     @answer = question.answers.new(answer_params)
     if @answer.save
-      redirect_to @answer.question
+      redirect_to @answer.question, notice: 'Your answer successfully created.'
     else
       render :new
     end

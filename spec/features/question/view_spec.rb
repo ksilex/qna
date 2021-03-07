@@ -7,12 +7,12 @@ feature 'User can view questions', %q{
 
   given!(:questions) { create_list(:question, 3) }
 
-  describe 'user' do
+  describe 'User' do
 
     scenario 'views questions' do
       visit questions_path
       expect(page).to have_content questions.first.title
-      expect(page).to have_content questions.last.body
+      expect(page).to have_content questions.last.title
     end
   end
 end

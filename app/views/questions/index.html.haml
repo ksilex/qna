@@ -1,5 +1,6 @@
 =link_to 'Ask question', new_question_path
--@questions.each do |q|
-  %p=q.title
-  %p=q.body
+%br
+%h2 Questions
+-@questions.each do |question|
+  =link_to question.title, question_path(question), class: 'title'
   %br
