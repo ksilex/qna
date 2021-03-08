@@ -5,7 +5,8 @@ feature 'User can view answers', %q{
   I'd like to be able to view answers
 } do
 
-  given!(:answers) { create_list(:answer, 3) }
+  given(:question) { create(:question) }
+  given!(:answers) { create_list(:answer, 3, question: question) }
 
   describe 'User' do
 

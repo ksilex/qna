@@ -12,5 +12,6 @@ feature 'Author can delete answer', %q{
     visit question_path(answer.question)
     click_on 'Delete Answer'
     expect(page).to have_content 'Your answer successfully deleted.'
+    expect(page).to_not have_content answer.body
   end
 end

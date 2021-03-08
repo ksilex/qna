@@ -13,6 +13,8 @@ feature 'Author can delete question', %q{
     visit question_path(question)
     click_on 'Delete Question'
     expect(page).to have_content 'Your question successfully deleted.'
+    expect(page).to_not have_content question.body
+    question.answers.each { |answer| expect(page).to_not have_content answer.body }
   end
 
   scenario 'Signed in user tries to delete question' do
