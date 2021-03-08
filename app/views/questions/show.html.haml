@@ -1,7 +1,7 @@
 %h1= question.title
 = question.body
 -if current_user&.author?(question)
-  =link_to 'Delete Question', question, method: :delete if question.user == current_user 
+  =link_to 'Delete Question', question, method: :delete
 %h2 Answers
 -question.answers.each do |answer|
   %p
