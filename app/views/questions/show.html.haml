@@ -1,10 +1,12 @@
 %h1= question.title
 = question.body
-=link_to 'Delete Question', question, method: :delete if question.user == current_user 
+-if current_user&.author?(question)
+  =link_to 'Delete Question', question, method: :delete if question.user == current_user 
 %h2 Answers
 -question.answers.each do |answer|
   %p
     =answer.body
-    =link_to 'Delete Answer', answer, method: :delete if answer.user == current_user 
+    -if current_user&.author?(answer) && answer.persisted?
+      =link_to 'Delete Answer', answer, method: :delete 
 %h3 Leave your answer
 = render 'answers/form'

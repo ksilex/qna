@@ -12,7 +12,7 @@ feature 'User can view answers', %q{
     scenario 'views question answers' do
       visit questions_path
       click_on class: 'title', match: :first
-      expect(page).to have_content answers.first.body
+      answers.each { |answer| expect(page).to have_content answer.body }
     end
   end
 end

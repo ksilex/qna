@@ -11,8 +11,7 @@ feature 'User can view questions', %q{
 
     scenario 'views questions' do
       visit questions_path
-      expect(page).to have_content questions.first.title
-      expect(page).to have_content questions.last.title
+      questions.each { |question| expect(page).to have_content question.title }
     end
   end
 end
