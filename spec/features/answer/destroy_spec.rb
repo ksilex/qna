@@ -6,12 +6,24 @@ feature 'Author can delete answer', %q{
 } do
 
   given!(:answer) { create(:answer) }
-  background { login(answer.user) }
+  given(:user) { create(:user) }
 
   scenario 'Author tries to delete answer' do
+    login(answer.user)
     visit question_path(answer.question)
     click_on 'Delete Answer'
     expect(page).to have_content 'Your answer successfully deleted.'
     expect(page).to_not have_content answer.body
+  end
+
+  scenario 'Signed in user tries to delete answer' do
+    login(user)
+    visit question_path(answer.question)
+    expect(page).to_not have_content 'Delete Answer'
+  end
+
+  scenario 'User tries to delete answer' do
+    visit question_path(answer.question)
+    expect(page).to_not have_content 'Delete Answer'
   end
 end

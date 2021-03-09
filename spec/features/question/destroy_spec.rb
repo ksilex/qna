@@ -22,4 +22,9 @@ feature 'Author can delete question', %q{
     visit question_path(question)
     expect(page).to_not have_content 'Delete Question'
   end
+
+  scenario 'User tries to delete question' do
+    visit question_path(question)
+    expect(page).to_not have_content 'Delete Question'
+  end
 end
