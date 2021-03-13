@@ -7,7 +7,7 @@ feature 'User can edit his answer', %q{
 } do
 
   given!(:answer) { create(:answer) }
-  given(:user) { create(:user) }
+  given(:answer_of_other_user) { create(:answer, question: answer.question) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(answer.question)
@@ -29,7 +29,23 @@ feature 'User can edit his answer', %q{
       end
     end
 
-    scenario 'edits his answer with errors'
-    scenario "tries to edit other user's question"
+    scenario 'edits his answer with errors', js: true do 
+      login(answer.user)
+      visit question_path(answer.question)
+      click_on 'Edit Answer'
+      within '.answers' do
+        fill_in 'Body', with: ''
+        click_on 'Answer'
+        expect(page).to have_content "Body can't be blank"
+      end
+    end
+    scenario "tries to edit other user's answer" do 
+      answer_of_other_user
+      login(answer.user)
+      visit question_path(answer.question)
+      within "[data-answer-id='#{answer_of_other_user.id}']" do
+        expect(page).to_not have_link 'Edit Answer'
+      end
+    end
   end
 end

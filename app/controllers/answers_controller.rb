@@ -6,9 +6,6 @@ class AnswersController < ApplicationController
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
-    respond_to do |format|
-      format.js
-    end
   end
   
   def edit
@@ -20,7 +17,6 @@ class AnswersController < ApplicationController
 
   def destroy
     answer.destroy
-    redirect_to answer.question, notice: 'Your answer successfully deleted.'
   end
 
   private

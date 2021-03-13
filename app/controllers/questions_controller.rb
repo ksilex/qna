@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :author_actions, only: [:edit, :update, :destroy]
   def index
     @questions = Question.all
   end
@@ -32,15 +33,17 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author?(question) 
-      question.destroy
-      redirect_to questions_path, notice: 'Your question successfully deleted.'
-    else
-      redirect_to questions_path, error: 'You must be the author of question.'
-    end
+    question.destroy
+    redirect_to questions_path, notice: 'Your question successfully deleted.' 
   end
 
   private
+
+  def author_actions
+    unless current_user.author?(question)
+      redirect_to questions_path, notice: "Can't perfom such action"
+    end
+  end
 
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : current_user.questions.new
