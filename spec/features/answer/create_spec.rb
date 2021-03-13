@@ -17,14 +17,13 @@ feature 'User can create an answer', %q{
       click_on question.title
     end
 
-    scenario 'answers a question' do
+    scenario 'answers a question', js: true do
       fill_in 'Body', with: 'users answer'
       click_on 'Answer'
-      expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'users answer'
     end
 
-    scenario 'answers with errors' do
+    scenario 'answers with errors', js: true do
       click_on 'Answer'
 
       expect(page).to have_content "Body can't be blank"

@@ -10,65 +10,85 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       it 'saves a new answer in the database' do
         expect { post :create, params: { answer: attributes_for(:answer),
-                                         question_id: answer.question }
+                                         question_id: answer.question }, 
+                               format: :js
         }.to change(answer.question.answers, :count).by(1)
       end
 
-      it 'redirects to associated question' do
-        post :create, params: { answer: attributes_for(:answer), question_id: answer.question }
-        expect(response).to redirect_to answer.question
+      it 'renders create' do
+        post :create, params: { answer: attributes_for(:answer), question_id: answer.question }, format: :js
+        expect(response).to render_template :create
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
         expect { post :create, params: { answer: attributes_for(:answer, :invalid_answer),
-                                         question_id: answer.question }
+                                         question_id: answer.question }, format: :js
         }.to_not change(answer.question.answers, :count)
       end
 
-      it 're-renders new view' do
-        post :create, params: { answer: attributes_for(:answer, :invalid_answer), question_id: answer.question }
-        expect(response).to render_template 'questions/show'
+      it 'renders create' do
+        post :create, params: { answer: attributes_for(:answer, :invalid_answer), question_id: answer.question }, format: :js
+        expect(response).to render_template :create
       end
     end
   end
 
   describe 'GET #edit' do
-    before { login(user) }
-    before { get :edit, params: { id: answer } }
+    context 'with user being author' do
+      before { login(answer.user) }
+      before { get :edit, params: { id: answer } }
 
-    it 'renders edit view' do
-      expect(response).to render_template :edit
+      it 'renders edit view' do
+        expect(response).to render_template :edit
+      end
+    end
+    context 'with user not being author' do
+      before { login(user) }
+      before { get :edit, params: { id: answer } }
+
+      it 'does not renders edit view' do
+        expect(response).to_not render_template :edit
+      end
     end
   end
 
   describe 'PATCH #update' do
-    before { login(user) }
+    context 'with user being author' do
+      before { login(answer.user) }
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+          expect(answer.body).to eq 'new body'
+        end
 
-    context 'with valid attributes' do
-      it 'changes answer attributes' do
-        patch :update, params: { id: answer, answer: { body: 'new body' } }
-        answer.reload
-        expect(answer.body).to eq 'new body'
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+          expect(response).to render_template :update
+        end
       end
 
-      it 'redirects to associated question' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer.question
+      context 'with invalid attributes' do
+        before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid_answer) }, format: :js }
+
+        it 'does not change answer' do
+          answer.reload
+          expect(answer.body).to eq answer.body
+        end
+
+        it 'renders update view' do
+          expect(response).to render_template :update
+        end
       end
     end
-
-    context 'with invalid attributes' do
-      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid_answer) } }
-
-      it 'does not change answer' do
+    context 'with user not being author' do
+      before { login(user) }
+      it 'does not changes answer attributes' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
         expect(answer.body).to eq answer.body
-      end
-
-      it 're-renders edit view' do
-        expect(response).to render_template :edit
       end
     end
   end

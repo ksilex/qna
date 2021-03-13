@@ -1,4 +1,5 @@
-= render "shared/errors", resource: answer
-= form_with model: [answer.question, answer], local: true do |form|
+.answer-errors
+  = render "shared/errors", resource: answer
+= form_with model: [question, answer], data: {form_id: answer.id}, local: false do |form|
   = form.text_area :body, placeholder: true
   = form.submit 'Answer'

@@ -3,10 +3,7 @@
 -if current_user&.author?(question)
   =link_to 'Delete Question', question, method: :delete
 %h2 Answers
--question.answers.each do |answer|
-  %p
-    =answer.body
-    -if current_user&.author?(answer) && answer.persisted?
-      =link_to 'Delete Answer', answer, method: :delete 
+.answers
+  = render question.answers
 %h3 Leave your answer
 = render 'answers/form'

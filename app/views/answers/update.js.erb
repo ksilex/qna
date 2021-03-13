@@ -1,0 +1,4 @@
+$('[data-form-id="<%=answer.id%>"]').prepend(`<%= render 'shared/errors', resource: answer %>`)
+<% unless answer.errors.any? %>
+$('[data-answer-id="<%=answer.id%>"]').html('<%= j render answer %>')
+<%end%>

@@ -1,0 +1,5 @@
+.answer{ "data-answer-id": "#{answer.id}" }
+  =answer.body
+  -if current_user&.author?(answer)
+    =link_to 'Edit Answer', edit_answer_path(answer), data: {link_id: answer.id}, remote: true
+    =link_to 'Delete Answer', answer, method: :delete 
