@@ -1,5 +1,5 @@
 = render "shared/errors", resource: question
-= form_with model: question do |form|
-  = form.text_field :title, placeholder: true
-  = form.text_area :body, placeholder: true
-  = form.submit
+= form_with model: question, data: {form_id: question.id}, local: false do |form|
+  = form.text_field :title, placeholder: true, class: 'form-control mb-2'
+  = form.text_area :body, placeholder: true, class: 'form-control mb-2'
+  = form.submit class: "btn btn-success"

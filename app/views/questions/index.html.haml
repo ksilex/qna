@@ -1,9 +1,6 @@
 =link_to 'Ask question', new_question_path
 %br
 %h2 Questions
--@questions.each do |question|
-  .question{ "data-question-id": "#{question.id}" }
-    =link_to question.title, question_path(question), class: 'title'
-    -if current_user&.author?(question)
-      =link_to 'Edit Question', edit_question_path(question)
-    %br
+.questions
+  = render @questions
+  

@@ -16,18 +16,18 @@ feature 'User can edit his question', %q{
   end
 
   describe 'Author' do
-    scenario 'edits his question' do
+    scenario 'edits his question', js: true do
       login(question.user)
       visit questions_path
       click_on 'Edit Question'
-      fill_in 'Body', with: 'edited question'
+      fill_in 'Title', with: 'edited title'
       click_on 'Update Question'
-
-      expect(page).to_not have_content question.body
-      expect(page).to have_content 'edited question'
+      
+      expect(page).to have_content 'edited title'
+      expect(page).to_not have_selector 'textarea'
     end
 
-    scenario 'edits his answer with errors' do 
+    scenario 'edits his answer with errors', js: true do 
       login(question.user)
       visit questions_path
       click_on 'Edit Question'
@@ -42,7 +42,7 @@ feature 'User can edit his question', %q{
       login(question.user)
       visit questions_path
       within "[data-question-id='#{question_of_other_user.id}']" do
-        expect(page).to_not have_link 'Edit'
+        expect(page).to_not have_link 'Edit Question'
       end
     end
   end

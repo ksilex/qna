@@ -38,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'GET #edit' do
     context 'with user being author' do
       before { login(answer.user) }
-      before { get :edit, params: { id: answer } }
+      before { get :edit, params: { id: answer }, xhr: true }
 
       it 'renders edit view' do
         expect(response).to render_template :edit
@@ -46,7 +46,7 @@ RSpec.describe AnswersController, type: :controller do
     end
     context 'with user not being author' do
       before { login(user) }
-      before { get :edit, params: { id: answer } }
+      before { get :edit, params: { id: answer }, xhr: true }
 
       it 'does not renders edit view' do
         expect(response).to_not render_template :edit
@@ -112,6 +112,35 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not deletes the answer' do
         expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(answer.question.answers, :count)
+      end
+    end
+  end
+
+  describe 'PATCH #best' do
+    context 'with user being author of question' do
+      before { login(answer.question.user) }
+      before { patch :best, params: { id: answer }, format: :js }
+
+      it 'changes answer to best' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'renders best view' do
+        expect(response).to render_template :best
+      end
+    end
+    context 'with user not being author' do
+      before { login(user) }
+      before { patch :best, params: { id: answer }, format: :js }
+
+      it 'does not change answer to best' do
+        answer.reload
+        expect(answer.best).to eq answer.best
+      end
+
+      it 'does not renders best view' do
+        expect(response).to_not render_template :best
       end
     end
   end

@@ -4,6 +4,6 @@
   =link_to 'Delete Question', question, method: :delete
 %h2 Answers
 .answers
-  = render question.answers
+  = render question.answers.sort_by_best
 %h3 Leave your answer
 = render 'answers/form'

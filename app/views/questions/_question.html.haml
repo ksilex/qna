@@ -1,0 +1,4 @@
+.question.mb-2{ "data-question-id": "#{question.id}" }
+  =link_to question.title, question_path(question), class: 'title'
+  -if current_user&.author?(question)
+    =link_to 'Edit Question', edit_question_path(question), data: {link_id: question.id}, remote: true

@@ -1,0 +1,4 @@
+- flash.each do |key, message|
+  = content_tag :div, class: "#{flash_class(key)}" do
+    = message
+    %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "alert", type: "button"}

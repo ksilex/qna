@@ -26,7 +26,7 @@ feature 'User can create question', %q{
       expect(page).to have_content 'text text text'
     end
 
-    scenario 'asks a question with errors', js: true do
+    scenario 'asks a question with errors' do
       click_on 'Create Question'
 
       expect(page).to have_content "Title can't be blank"
