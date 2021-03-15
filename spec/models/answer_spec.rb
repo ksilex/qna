@@ -23,13 +23,19 @@ RSpec.describe Answer, type: :model do
       let(:question) { create(:question) }
       let!(:answer_best) { create(:answer, question: question, best: true) }
       let(:answer) { create(:answer, question: question) }
+      before { answer.mark_as_best }
 
-      it 'updates answers' do
-        answer.mark_as_best
-        answer.reload
-        answer_best.reload
-        expect(answer.best).to be true
-        expect(answer_best.best).to be false
+      context 'selected answer' do
+        it 'set to best' do
+          answer.reload
+          expect(answer).to be_best
+        end
+      end
+      context 'previous best answer' do
+        it 'set to false' do
+          answer_best.reload
+          expect(answer_best.best).to be false
+        end
       end
     end
   end

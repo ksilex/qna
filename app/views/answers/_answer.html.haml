@@ -1,5 +1,5 @@
-.answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best) }
-  -if answer.best
+.answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best?) }
+  -if answer.best?
     %i.fas.fa-check.fa-2x
   =answer.body
   -if current_user&.author?(answer)

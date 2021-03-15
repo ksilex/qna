@@ -7,9 +7,6 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @answer.save
   end
-  
-  def edit
-  end
 
   def update
     answer.update(answer_params)
