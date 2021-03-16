@@ -2,4 +2,5 @@
   = render "shared/errors", resource: answer
 = form_with model: [question, answer], data: {form_id: answer.id}, local: false do |form|
   = form.text_area :body, placeholder: true, class: 'form-control mb-2'
+  = form.file_field :files, placeholder: true, multiple: true, direct_upload: true
   = form.submit 'Answer', class: "btn btn-success"
