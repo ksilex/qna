@@ -26,26 +26,26 @@ feature 'Author can delete attached files', %q{
     end
   end
 
-  # context 'of answer' do
-  #   given!(:answer) { create(:answer, :with_file) }
+  context 'of answer' do
+    given!(:answer) { create(:answer, :with_file) }
 
-  #   scenario 'Author tries to delete file', js: true do
-  #     login(answer.user)
-  #     visit question_path(answer.question)
-  #     click_on 'Delete File'
-  #     expect(page).to_not have_link 'rails_helper.rb'
-  #   end
+    scenario 'Author tries to delete file', js: true do
+      login(answer.user)
+      visit question_path(answer.question)
+      click_on 'Delete File'
+      expect(page).to_not have_link 'rails_helper.rb'
+    end
 
-  #   scenario 'Signed in user tries to delete file' do
-  #     login(user)
-  #     visit question_path(answer.question)
-  #     expect(page).to_not have_content 'Delete File'
-  #   end
-  # end
+    scenario 'Signed in user tries to delete file' do
+      login(user)
+      visit question_path(answer.question)
+      expect(page).to_not have_content 'Delete File'
+    end
+  end
 
-  # scenario 'User tries to delete file' do
-  #   visit question_path(answer.question)
-  #   expect(page).to_not have_content 'Delete File'
-  # end
+  scenario 'User tries to delete file' do
+    visit question_path(answer.question)
+    expect(page).to_not have_content 'Delete File'
+  end
   
 end

@@ -16,29 +16,42 @@ feature 'User can edit his answer', %q{
   end
 
   describe 'Author' do
-    scenario 'edits his answer', js: true do
-      login(answer.user)
-      visit question_path(answer.question)
-      click_on 'Edit Answer'
-      within '.answers' do
-        fill_in 'Body', with: 'edited answer'
-        click_on 'Answer'
-        expect(page).to_not have_content answer.body
-        expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+    context 'his answer' do
+      background do
+        login(answer.user)
+        visit question_path(answer.question)
+        click_on 'Edit Answer'
+      end
+
+      scenario 'edits his answer', js: true do
+        within '.answers' do
+          fill_in 'Body', with: 'edited answer'
+          click_on 'Answer'
+          expect(page).to_not have_content answer.body
+          expect(page).to have_content 'edited answer'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+
+      scenario 'edits his answer with errors', js: true do 
+        within '.answers' do
+          fill_in 'Body', with: ''
+          click_on 'Answer'
+          expect(page).to have_content "Body can't be blank"
+        end
+      end
+
+      scenario 'edits answer and attaches file', js: true do
+        within '.answers' do
+          fill_in 'Body', with: 'edited answer'
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+          click_on 'Answer'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
       end
     end
 
-    scenario 'edits his answer with errors', js: true do 
-      login(answer.user)
-      visit question_path(answer.question)
-      click_on 'Edit Answer'
-      within '.answers' do
-        fill_in 'Body', with: ''
-        click_on 'Answer'
-        expect(page).to have_content "Body can't be blank"
-      end
-    end
     scenario "tries to edit other user's answer" do 
       answer_of_other_user
       login(answer.user)

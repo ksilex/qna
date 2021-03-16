@@ -3,13 +3,7 @@
 -if current_user&.author?(question)
   =link_to 'Delete Question', question, method: :delete
 -if question.files.attached?
-  .files 
-    Files:
-    -question.files.each do |file|
-      .file{ "data-file-id": "#{file.id}" }
-        =link_to file.filename.to_s, url_for(file)
-        -if current_user&.author?(question)
-          =link_to 'Delete File', attachment_path(file), method: :delete, remote: true
+  = render "shared/files", resource: question
 %h2 Answers
 .answers
   = render question.answers.sort_by_best
