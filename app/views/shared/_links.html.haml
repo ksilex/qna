@@ -1,0 +1,5 @@
+.links
+  Links:
+  -resource.links.each do |link|
+    .link{ "data-link-id": "#{link.id}" }
+      =link_to link.name, link.url

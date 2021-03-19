@@ -9,3 +9,5 @@
     =link_to 'Mark as best', best_answer_path(answer), method: :patch, remote: true
   -if answer.files.attached?
     = render "shared/files", resource: answer
+  -if answer.links.any?
+    = render "shared/links", resource: answer

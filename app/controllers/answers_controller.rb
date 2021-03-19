@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
       answer.mark_as_best
       @answers = answer.question.answers.sort_by_best
     else
-      redirect_to root_path, notice: 'Cant perfom such action' 
+      redirect_to root_path, notice: 'Cant perfom such action'
     end
   end
 
@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
 
   def author_actions
     unless current_user.author?(answer)
-      redirect_to root_path, notice: 'Cant perfom such action' 
+      redirect_to root_path, notice: 'Cant perfom such action'
     end
   end
 
@@ -44,6 +44,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
   end
 end
