@@ -40,18 +40,17 @@ feature 'User can create an answer', %q{
 
     scenario 'answers with multiple links added', js: true do
       fill_in 'Body', with: 'users answer'
-      fill_in 'Name', with: 'My gist'
-      fill_in 'Url', with: gist_url
       click_on 'Add link'
-      within find('form:nth-child(6)') do
-        fill_in 'Name', with: 'My gist 2'
-      end
-      within find('form:nth-child(7)') do
-        fill_in 'Url', with: gist_url
-      end
+      names = page.all('.link_name')
+      urls = page.all('.link_url')
+      names[0].fill_in with: 'My gist'
+      names[1].fill_in with: 'My gist 2'
+      urls[0].fill_in with: gist_url
+      urls[1].fill_in with: gist_url
       click_on 'Answer'
       within '.answers' do
         expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_link 'My gist 2', href: gist_url
       end
     end
   end
