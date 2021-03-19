@@ -1,0 +1,4 @@
+$('.link[data-link-id="<%=link.id%>"]').remove()
+if ($('.links[data-links-id="<%=link.parent.id%>"]').children().length == 0){
+  $('.links[data-links-id="<%=link.parent.id%>"]').remove()
+}

@@ -1,5 +1,7 @@
-.links
+.links{ "data-links-id": "#{resource.id}" }
   Links:
   -resource.links.each do |link|
     .link{ "data-link-id": "#{link.id}" }
       =link_to link.name, link.url
+      -if current_user&.author?(resource)
+        =link_to 'Delete Link', link_path(link), method: :delete, remote: true

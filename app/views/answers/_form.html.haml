@@ -1,10 +1,11 @@
 .answer-errors
   = render "shared/errors", resource: answer
-= form_with model: [question, answer], data: {form_id: answer.id}, local: false do |form|
-  = form.text_area :body, placeholder: true, class: 'form-control mb-2'
-  = form.file_field :files, placeholder: true, multiple: true, direct_upload: true
-  Link form
-  = form.fields_for :links do |link|
-    = link.text_field :name, placeholder: true
-    = link.text_field :url, placeholder: true
-  = form.submit 'Answer', class: "btn btn-success"
+= form_with model: [question, answer], data: {form_id: answer.id}, local: false do |f|
+  = f.text_area :body, placeholder: true, class: 'form-control mb-2'
+  = f.file_field :files, placeholder: true, multiple: true, direct_upload: true
+  %h3 Link form
+  = f.fields_for :links do |link|
+    = render 'shared/link_fields', f: link
+  .links
+    = link_to_add_association 'Add link', f, :links, partial: "shared/link_fields"
+  = f.submit 'Answer', class: "btn btn-success"

@@ -8,9 +8,21 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 require("jquery")
+require("@nathanvda/cocoon")
 import * as bootstrap from 'bootstrap'
 import "../stylesheets/application"
 
+
+// jQuery.fn.smoothRemove = function(speed){
+//   $(this).fadeOut(speed,function(){
+//     var storeElement = this
+//     $(this).remove()
+//     if ($(storeElement).parent().children().length == 0) {
+//       console.log($(storeElement).parent().html())
+//       $(storeElement).parent().remove()
+//     }
+//   })
+// }
 document.addEventListener("DOMContentLoaded", function(event) {
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {

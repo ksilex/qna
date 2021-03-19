@@ -1,1 +1,4 @@
-$('[data-file-id="<%=attachment.id%>"]').fadeOut()
+$('[data-file-id="<%=attachment.id%>"]').remove()
+if ($('.files[data-files-id="<%=attachment.record.id%>"]').children().length == 0){
+  $('.files[data-files-id="<%=attachment.record.id%>"]').remove()
+}

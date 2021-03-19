@@ -8,6 +8,7 @@ feature 'User can create an answer', %q{
 
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
+  given(:gist_url) {'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c'}
 
   describe 'Authenticated user' do
     background do
@@ -35,6 +36,23 @@ feature 'User can create an answer', %q{
       click_on 'Answer'
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'answers with multiple links added', js: true do
+      fill_in 'Body', with: 'users answer'
+      fill_in 'Name', with: 'My gist'
+      fill_in 'Url', with: gist_url
+      click_on 'Add link'
+      within find('form:nth-child(6)') do
+        fill_in 'Name', with: 'My gist 2'
+      end
+      within find('form:nth-child(7)') do
+        fill_in 'Url', with: gist_url
+      end
+      click_on 'Answer'
+      within '.answers' do
+        expect(page).to have_link 'My gist', href: gist_url
+      end
     end
   end
 
