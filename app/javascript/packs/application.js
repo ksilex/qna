@@ -11,7 +11,7 @@ require("jquery")
 require("@nathanvda/cocoon")
 import * as bootstrap from 'bootstrap'
 import "../stylesheets/application"
-
+import "scripts/gist_formatter"
 
 // jQuery.fn.smoothRemove = function(speed){
 //   $(this).fadeOut(speed,function(){
