@@ -26,7 +26,7 @@ feature 'User can edit his question', %q{
       scenario 'edits his question', js: true do
         fill_in 'Title', with: 'edited title'
         click_on 'Update Question'
-        
+
         expect(page).to have_content 'edited title'
         expect(page).to_not have_selector 'textarea'
       end
@@ -40,15 +40,25 @@ feature 'User can edit his question', %q{
         expect(page).to have_link 'spec_helper.rb'
       end
 
-      scenario 'edits his answer with errors', js: true do 
+      scenario 'edits his answer with errors', js: true do
         fill_in 'Body', with: ''
         click_on 'Update Question'
-        
+
         expect(page).to have_content "Body can't be blank"
+      end
+
+      scenario 'edits question and attaches link', js: true do
+        fill_in 'Title', with: 'edited title'
+        click_on 'Add link'
+        fill_in 'Name', with: 'test'
+        fill_in 'Url', with: 'https://test.com'
+        click_on 'Update Question'
+        click_on 'edited title'
+        expect(page).to have_link 'test', href: 'https://test.com'
       end
     end
 
-    scenario "tries to edit other user's question" do 
+    scenario "tries to edit other user's question" do
       question_of_other_user
       login(question.user)
       visit questions_path

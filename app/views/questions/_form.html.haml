@@ -1,6 +1,13 @@
-= render "shared/errors", resource: question
-= form_with model: question, data: {form_id: question.id}, local: false do |form|
-  = form.text_field :title, placeholder: true, class: 'form-control mb-2'
-  = form.text_area :body, placeholder: true, class: 'form-control mb-2'
-  = form.file_field :files, placeholder: true, multiple: true, direct_upload: true
-  = form.submit class: "btn btn-success"
+.question-form
+  .question-errors
+    = render "shared/errors", resource: question
+  = form_with model: question, data: {form_id: question.id}, local: false do |f|
+    = f.text_field :title, placeholder: true, class: 'form-control mb-2'
+    = f.text_area :body, placeholder: true, class: 'form-control mb-2'
+    = f.file_field :files, placeholder: true, multiple: true, direct_upload: true
+    %h3 Link form
+    = f.fields_for :links do |link|
+      = render 'shared/link_fields', f: link
+    .links
+      = link_to_add_association 'Add link', f, :links, partial: "shared/link_fields"
+    = f.submit class: "btn btn-success"

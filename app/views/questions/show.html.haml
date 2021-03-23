@@ -4,6 +4,8 @@
   =link_to 'Delete Question', question, method: :delete
 -if question.files.attached?
   = render "shared/files", resource: question
+-if question.links.any?
+  = render "shared/links", resource: question
 %h2 Answers
 .answers
   = render question.answers.sort_by_best

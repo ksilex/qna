@@ -33,7 +33,7 @@ feature 'User can edit his answer', %q{
         end
       end
 
-      scenario 'edits his answer with errors', js: true do 
+      scenario 'edits his answer with errors', js: true do
         within '.answers' do
           fill_in 'Body', with: ''
           click_on 'Answer'
@@ -50,9 +50,20 @@ feature 'User can edit his answer', %q{
           expect(page).to have_link 'spec_helper.rb'
         end
       end
+
+      scenario 'edits answer and attaches link', js: true do
+        within '.answers' do
+          fill_in 'Body', with: 'edited answer'
+          click_on 'Add link'
+          fill_in 'Name', with: 'test'
+          fill_in 'Url', with: 'https://test.com'
+          click_on 'Answer'
+          expect(page).to have_link 'test', href: 'https://test.com'
+        end
+      end
     end
 
-    scenario "tries to edit other user's answer" do 
+    scenario "tries to edit other user's answer" do
       answer_of_other_user
       login(answer.user)
       visit question_path(answer.question)

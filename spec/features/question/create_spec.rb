@@ -7,6 +7,7 @@ feature 'User can create question', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:gist_url) {'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c'}
 
   describe 'Authenticated user' do
     background do
@@ -16,30 +17,43 @@ feature 'User can create question', %q{
       click_on 'Ask question'
     end
 
-    scenario 'asks a question' do
+    scenario 'asks a question', js: true do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
       click_on 'Create Question'
-
-      expect(page).to have_content 'Your question successfully created.'
       expect(page).to have_content 'Test question'
-      expect(page).to have_content 'text text text'
     end
 
-    scenario 'asks a question with errors' do
+    scenario 'asks a question with errors', js: true do
       click_on 'Create Question'
 
       expect(page).to have_content "Title can't be blank"
     end
 
-    scenario 'asks a question with attached file' do
+    scenario 'asks a question with attached file', js: true do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Create Question'
-      
+      click_on 'Test question'
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'asks a question with attached link', js: true do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+      2.times { click_on 'Add link' }
+      names = page.all('.link_name')
+      urls = page.all('.link_url')
+      names[0].fill_in with: 'My gist'
+      names[1].fill_in with: 'My gist 2'
+      urls[0].fill_in with: gist_url
+      urls[1].fill_in with: gist_url
+      click_on 'Create Question'
+      click_on 'Test question'
+      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'My gist 2', href: gist_url
     end
   end
 
