@@ -1,0 +1,21 @@
+.main-body
+  .row.gutters-sm
+    .col-md-4.mb-3
+      .card
+        .card-body
+          .d-flex.flex-column.align-items-center.text-center
+            %img.rounded-circle{alt: "Admin", src: "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg", width: "150"}/
+            .mt-3
+              %h4= current_user.email
+    .col-md-8
+      .row.gutters-sm
+        .col-sm-6.mb-3
+          .card.h-100
+            .card-body
+              %h6.d-flex.align-items-center.mb-3 Rewards
+              - @rewards.each do |reward|
+                %h5
+                  Question: #{reward.question.title}
+                .mb-2
+                  = image_tag reward.file, style: 'width:50px;height:50px', class: 'rounded-3'
+                  = reward.name

@@ -6,6 +6,8 @@
   = render "shared/files", resource: question
 -if question.links.any?
   = render "shared/links", resource: question
+-if question.reward
+  = render question.reward
 %h2 Answers
 .answers
   = render question.answers.sort_by_best

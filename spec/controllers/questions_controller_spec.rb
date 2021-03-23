@@ -25,15 +25,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #new' do
-    before { login(user) }
-    before { get :new }
-
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
-
   describe 'GET #edit' do
     context 'with user being author' do
       before { login(question.user) }

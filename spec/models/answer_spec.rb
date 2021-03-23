@@ -25,15 +25,17 @@ RSpec.describe Answer, type: :model do
   end
   describe 'methods' do
     describe 'mark_as_best' do
-      let(:question) { create(:question) }
+      let(:question) { create(:question, :with_reward) }
       let!(:answer_best) { create(:answer, question: question, best: true) }
       let(:answer) { create(:answer, question: question) }
       before { answer.mark_as_best }
 
       context 'selected answer' do
         it 'set to best' do
-          answer.reload
           expect(answer).to be_best
+        end
+        it 'author got reward' do
+          expect(answer.user.rewards.count).to eq 1
         end
       end
       context 'previous best answer' do

@@ -7,6 +7,8 @@
       %ul.navbar-nav.ms-auto.mb-2.mb-lg-0
         - if current_user
           %li.nav-item
+            = link_to 'Profile', profile_path, class: "nav-link"
+          %li.nav-item
             = link_to 'Sign Out', destroy_user_session_path, class: "nav-link", method: :delete
         - else
           %li.nav-item

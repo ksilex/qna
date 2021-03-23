@@ -19,6 +19,7 @@ class AnswersController < ApplicationController
   def best
     if current_user.author?(answer.question)
       answer.mark_as_best
+      @reward = answer.question.reward
       @answers = answer.question.answers.sort_by_best
     else
       redirect_to root_path, notice: 'Cant perfom such action'

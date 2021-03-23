@@ -4,3 +4,6 @@
 // $('.answers').prepend('<%#= j render answer %>')
 // то что сверху работает, но если отметить все ответы, то ни на одном не будет ссылки на best_answer до f5
 $('.answers').html('<%= j render @answers %>')
+<% if @reward %>
+  $('.reward').html('<%= j render @reward %>')
+<% end %>

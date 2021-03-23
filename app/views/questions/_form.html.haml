@@ -10,4 +10,7 @@
       = render 'shared/link_fields', f: link
     .links
       = link_to_add_association 'Add link', f, :links, partial: "shared/link_fields"
+    -if !question.reward
+      .reward-form
+        = link_to_add_association 'Add Reward', f, :reward, partial: "questions/reward_fields"
     = f.submit class: "btn btn-success"

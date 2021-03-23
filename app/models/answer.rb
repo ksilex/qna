@@ -15,6 +15,7 @@ class Answer < ApplicationRecord
     transaction do
       Answer.where(question_id: question_id).update_all(best: false)
       update!(best: true)
+      question&.reward&.update!(user_id: user_id)
     end
 	end
 

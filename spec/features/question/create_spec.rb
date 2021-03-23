@@ -55,6 +55,17 @@ feature 'User can create question', %q{
       expect(page).to have_link 'My gist', href: gist_url
       expect(page).to have_link 'My gist 2', href: gist_url
     end
+
+    scenario 'asks a question with attached reward', js: true do
+      fill_in 'Title', with: 'Test question'
+      fill_in 'Body', with: 'text text text'
+      click_on 'Add Reward'
+      fill_in 'Name', with: 'reward'
+      attach_file 'File', file_fixture('ec08c343da0011779330e0ed7d7313f6e0bfb50d_full.jpg')
+      click_on 'Create Question'
+      click_on 'Test question'
+      expect(page.find('.rounded-3')['src']).to have_content 'ec08c343da0011779330e0ed7d7313f6e0bfb50d_full.jpg'
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do
