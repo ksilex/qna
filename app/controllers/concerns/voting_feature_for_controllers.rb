@@ -11,6 +11,10 @@ module VotingFeatureForControllers
     @sum = resource.votes.summarize
   end
 
+  def unvote
+    resource.votes.where()create(user_id: current_user.id, vote_type: :downvote)
+  end
+
   private
 
   def resource
