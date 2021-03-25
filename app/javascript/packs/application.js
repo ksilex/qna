@@ -33,6 +33,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
+
+  $('.question').on( "click", '[data-association="reward"]', function() {
+    $(this).hide();
+  });
 });
 
 Rails.start()

@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include VotingFeatureForControllers
+
   before_action :authenticate_user!
   before_action :author_actions, only: [:edit, :update, :destroy]
 

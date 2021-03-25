@@ -4,8 +4,14 @@ Rails.application.routes.draw do
     get "profile", to: "users/sessions#profile"
   end
   root to: "questions#index"
-  resources :questions do
-    resources :answers, shallow: true, except: %i[index show] do
+  concern :votes do
+    member do
+      post :upvote
+      post :downvote
+    end
+  end
+  resources :questions, concerns: :votes do
+    resources :answers, concerns: :votes, shallow: true, except: %i[index show] do
       member do
         patch :best
       end

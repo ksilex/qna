@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  include VotingFeatureForControllers
+
   before_action :authenticate_user!, except: [:index, :show]
   before_action :author_actions, only: [:edit, :update, :destroy]
   def index

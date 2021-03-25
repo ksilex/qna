@@ -1,5 +1,14 @@
 %h1= question.title
-= question.body
+.question-body
+  .voting-links
+    = link_to polymorphic_path(question, action: :upvote), method: :post, remote: true, class: 'upvote-link' do
+      %i.fas.fa-arrow-up
+    .vote-count
+      = question.votes.summarize
+    = link_to polymorphic_path(question, action: :downvote), method: :post, remote: true, class: 'downvote-link' do
+      %i.fas.fa-arrow-down
+  .question-text
+    = question.body
 -if current_user&.author?(question)
   =link_to 'Delete Question', question, method: :delete
 -if question.files.attached?

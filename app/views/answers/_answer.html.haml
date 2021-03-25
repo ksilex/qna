@@ -1,7 +1,16 @@
 .answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best?) }
-  -if answer.best?
-    %i.fas.fa-check.fa-2x
-  =answer.body
+  .answer-body
+    -if answer.best?
+      %i.fas.fa-check.fa-lg
+    .voting-links
+      = link_to polymorphic_path(answer, action: :upvote), method: :post, remote: true, class: 'upvote-link' do
+        %i.fas.fa-arrow-up
+      .vote-count
+        = answer.votes.summarize
+      = link_to polymorphic_path(answer, action: :downvote), method: :post, remote: true, class: 'downvote-link' do
+        %i.fas.fa-arrow-down
+    .answer-text
+      =answer.body
   -if current_user&.author?(answer)
     =link_to 'Edit Answer', edit_answer_path(answer), data: {link_id: answer.id}, remote: true
     =link_to 'Delete Answer', answer, method: :delete , remote: true

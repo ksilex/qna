@@ -2,7 +2,7 @@
 import { Octokit } from "@octokit/rest"
 document.addEventListener("turbolinks:load", function() {
   const octokit = new Octokit()
-  
+
   $('.link').each(function() {
     if ($(this).children().attr('href').includes('gist.github.com')){
       var link = this
