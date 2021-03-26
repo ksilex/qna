@@ -11,4 +11,12 @@ class User < ApplicationRecord
   def author?(instance)
     instance.user_id == id
   end
+
+  def upvoted?(resource)
+    votes.where(parent: resource, vote_type: :upvote).exists?
+  end
+
+  def downvoted?(resource)
+    votes.where(parent: resource, vote_type: :downvote).exists?
+  end
 end

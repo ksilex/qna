@@ -2,22 +2,48 @@ module VotingFeatureForControllers
   extend ActiveSupport::Concern
 
   def upvote
-    resource.votes.create(user_id: current_user.id, vote_type: :upvote)
-    @sum = resource.votes.summarize
+    vote = resource.votes.new(user_id: current_user.id, vote_type: :upvote)
+    if vote.save
+      json_response('upvote')
+    else
+      resource_errors(vote, resource)
+    end
   end
 
   def downvote
-    resource.votes.create(user_id: current_user.id, vote_type: :downvote)
-    @sum = resource.votes.summarize
+    vote = resource.votes.new(user_id: current_user.id, vote_type: :downvote)
+    if vote.save
+      json_response('downvote')
+    else
+      resource_errors(vote, resource)
+    end
   end
 
   def unvote
-    resource.votes.where()create(user_id: current_user.id, vote_type: :downvote)
+    resource.votes.find_by(user_id: current_user.id)&.destroy
+    json_response('unvote')
   end
 
   private
 
+  def resource_errors(vote, resource)
+    render json: {
+      errors: vote.errors.full_messages,
+      resource: resource.model_name.singular,
+      resource_id: resource.id
+    }, status: :unprocessable_entity
+  end
+
+  def json_response(vote_type)
+    render json: {
+      resource: resource.model_name.singular,
+      resource_id: resource.id,
+      vote_type: vote_type,
+      sum: resource.votes.summarize
+    }
+  end
+
   def resource
-    @resource = controller_name.classify.constantize.find(params[:id])
+    controller_name.classify.constantize.find(params[:id])
   end
 end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       post :upvote
       post :downvote
+      delete :unvote
     end
   end
   resources :questions, concerns: :votes do

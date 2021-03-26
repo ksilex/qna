@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .upvote-link, .downvote-link {
   color: black;
-  text-decoration: none; /* no underline */
+  text-decoration: none;
 }
 
 .voting-links {
@@ -11,26 +11,20 @@
   align-items: flex-start;
 }
 
-.question-body {
+.question-body, .answer-body{
   display: flex;
   text-align: center;
 }
 
-.question-text {
-  margin-left: 10px;
-  align-self: center;
-}
-
-.answer-body {
-  display: flex;
-  text-align: center;
-}
-
-.answer-text {
+.question-text, .answer-text {
   margin-left: 10px;
   align-self: center;
 }
 
 .fa-check {
   align-self: center;
+}
+
+.active {
+  color: rgba(255, 205, 42, 0.863);
 }

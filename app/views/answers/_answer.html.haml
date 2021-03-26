@@ -1,14 +1,8 @@
 .answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best?) }
-  .answer-body
+  %div{class: "answer-body #{answer.id}"}
     -if answer.best?
       %i.fas.fa-check.fa-lg
-    .voting-links
-      = link_to polymorphic_path(answer, action: :upvote), method: :post, remote: true, class: 'upvote-link' do
-        %i.fas.fa-arrow-up
-      .vote-count
-        = answer.votes.summarize
-      = link_to polymorphic_path(answer, action: :downvote), method: :post, remote: true, class: 'downvote-link' do
-        %i.fas.fa-arrow-down
+    = render "shared/voting", resource: answer
     .answer-text
       =answer.body
   -if current_user&.author?(answer)
