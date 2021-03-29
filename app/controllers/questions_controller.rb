@@ -3,10 +3,17 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
   before_action :author_actions, only: [:edit, :update, :destroy]
+  after_action :dummy, only: :create
   def index
     @questions = Question.all
   end
+def dummy
 
+  ActionCable.server.broadcast("questions", ApplicationController.render(
+    partial: 'questions/question',
+    locals: { question: @question }
+  ))
+end
   def show
   end
 
