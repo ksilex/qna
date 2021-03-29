@@ -3,6 +3,14 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :author_actions, only: [:edit, :update, :destroy]
+  after_action :dummy, only: :create
+
+  def dummy
+    ActionCable.server.broadcast("answers:#{@answer.question_id}", ApplicationController.render(
+      partial: 'answers/non-author-answer',
+      locals: { answer: @answer, current_user: current_user }
+    ))
+  end
 
   def create
     @answer = question.answers.new(answer_params)

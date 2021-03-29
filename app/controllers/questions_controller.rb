@@ -7,13 +7,14 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.all
   end
-def dummy
 
-  ActionCable.server.broadcast("questions", ApplicationController.render(
-    partial: 'questions/question',
-    locals: { question: @question }
-  ))
-end
+  def dummy
+    ActionCable.server.broadcast("questions", ApplicationController.render(
+      partial: 'questions/non-author-question',
+      locals: { question: @question, current_user: current_user }
+    ))
+  end
+  
   def show
   end
 

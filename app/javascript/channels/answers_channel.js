@@ -1,8 +1,9 @@
 import consumer from "./consumer"
 $(document).on('turbolinks:load', function(){
-consumer.subscriptions.create("QuestionsChannel", {
+consumer.subscriptions.create({channel: "AnswersChannel", question_id: $(".question").data("id")}, {
   connected() {
-    console.log("Connected to the room!");
+     console.log($(".question").data("id"));
+    console.log("Connected to the question!");
     // Called when the subscription is ready for use on the server
   },
 
@@ -11,9 +12,8 @@ consumer.subscriptions.create("QuestionsChannel", {
   },
 
   received(data) {
-    $('.questions').prepend(data);
+    $('.answers').prepend(data);
     console.log(data);
     // Called when there's incoming data on the websocket for this channel
   }
-});
-})
+});})

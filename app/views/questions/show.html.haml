@@ -1,18 +1,19 @@
-%h1= question.title
-%div{class: "question-body #{question.id}"}
-  = render "shared/voting", resource: question
-  .question-text
-    = question.body
--if current_user&.author?(question)
-  =link_to 'Delete Question', question, method: :delete
--if question.files.attached?
-  = render "shared/files", resource: question
--if question.links.any?
-  = render "shared/links", resource: question
--if question.reward
-  = render question.reward
-%h2 Answers
-.answers
-  = render question.answers.sort_by_best
-%h3 Leave your answer
-= render 'answers/form'
+.question{ "data-id": "#{question.id}"}
+  %h1= question.title
+  %div{class: "question-body #{question.id}"}
+    = render "shared/voting", resource: question
+    .question-text
+      = question.body
+  -if current_user&.author?(question)
+    =link_to 'Delete Question', question, method: :delete
+  -if question.files.attached?
+    = render "shared/files", resource: question
+  -if question.links.any?
+    = render "shared/links", resource: question
+  -if question.reward
+    = render question.reward
+  %h2 Answers
+  .answers
+    = render question.answers.sort_by_best
+  %h3 Leave your answer
+  = render 'answers/form'

@@ -3,7 +3,6 @@ class Vote < ApplicationRecord
   belongs_to :parent, polymorphic: true
 
   validates :vote_type, presence: true
-  validate :user_can_vote
   validate :cant_self_vote
   validate :cant_vote_twice
 
