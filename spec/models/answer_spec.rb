@@ -4,6 +4,7 @@ RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { should belong_to(:question) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:votes).dependent(:destroy) }
     it { should accept_nested_attributes_for :links }
     it 'have many attached files' do
       expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
@@ -45,5 +46,8 @@ RSpec.describe Answer, type: :model do
         end
       end
     end
+  end
+  it_should_behave_like 'Votes' do
+    let(:model) { create(:question) }
   end
 end

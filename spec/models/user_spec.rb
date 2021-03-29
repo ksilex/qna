@@ -36,5 +36,34 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe 'upvoted?' do
+
+      context 'question' do
+        let(:question) { create(:question) }
+        let(:user) { create(:user) }
+        let!(:vote) { create(:vote, parent: question) }
+
+        it 'is upvoted by user' do
+          expect(vote.user.upvoted?(question)).to be true
+        end
+        it 'is not upvoted by random user' do
+          expect(user.upvoted?(question)).to be false
+        end
+      end
+
+      context 'answer' do
+        let(:answer) { create(:answer) }
+        let(:user) { create(:user) }
+        let!(:vote) { create(:vote, parent: answer) }
+
+        it 'is upvoted by user' do
+          expect(vote.user.upvoted?(answer)).to be true
+        end
+        it 'is not upvoted by random user' do
+          expect(user.upvoted?(answer)).to be false
+        end
+      end
+    end
   end
 end

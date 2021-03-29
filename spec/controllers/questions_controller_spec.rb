@@ -134,4 +134,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+  it_should_behave_like 'VotesController' do
+    let(:model) { create :question}
+  end
 end
