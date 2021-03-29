@@ -1,12 +1,17 @@
 class Vote < ApplicationRecord
-  enum vote_type: %i[downvote upvote]
   belongs_to :user
   belongs_to :parent, polymorphic: true
+
   validate :user_can_vote
+
   after_validation :destroy_previous_decision
 
+  enum vote_type: { upvote: 1, downvote: -1 }
+
   def self.summarize
-    where(vote_type: :upvote).size - where(vote_type: :downvote).size
+    values = 0
+    all.each { |vote| values += Vote.vote_types[vote.vote_type] }
+    values
   end
 
   def destroy_previous_decision

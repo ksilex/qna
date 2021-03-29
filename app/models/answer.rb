@@ -8,6 +8,7 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank
 
   has_many_attached :files
+
   validates :body, presence: true
   validate :one_best_answer, on: :update
 
