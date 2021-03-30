@@ -1,7 +1,6 @@
 import consumer from "./consumer"
 consumer.subscriptions.create("QuestionsChannel", {
   connected() {
-    console.log("Connected to the question");
   },
 
   disconnected() {

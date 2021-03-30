@@ -5,16 +5,7 @@ class QuestionsController < ApplicationController
   before_action :author_actions, only: [:edit, :update, :destroy]
   after_action :push_question, only: :create
   def index
-    @questions = Question.all.order(:updated_at)
-  end
-
-  def push_question
-    return if @question.errors.any?
-
-    ActionCable.server.broadcast("questions", ApplicationController.render(
-      partial: 'questions/non-author-question',
-      locals: { question: @question, current_user: current_user }
-    ))
+    @questions = Question.all.order(updated_at: :desc)
   end
 
   def show
@@ -34,6 +25,15 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def push_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast("questions", ApplicationController.render(
+      partial: 'questions/non-author-question',
+      locals: { question: @question, current_user: current_user }
+    ))
+  end
 
   def author_actions
     unless current_user.author?(question)

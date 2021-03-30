@@ -1,5 +1,5 @@
 .comment-errors{ "data-resource-id": "#{resource.id}"}
   = render "shared/errors", resource: comment
 = form_with model: [resource, comment], local: false do |f|
-  = f.text_area :body, placeholder: true, class: 'form-control mb-2'
+  = f.text_area :body, placeholder: true, class: 'form-control mb-2 comment-body', rows: "1"
   = f.submit 'Comment', class: "btn btn-success"

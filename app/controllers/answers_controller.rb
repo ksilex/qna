@@ -5,15 +5,6 @@ class AnswersController < ApplicationController
   before_action :author_actions, only: [:edit, :update, :destroy]
   after_action :push_answer, only: :create
 
-  def push_answer
-    return if @answer.errors.any?
-
-    ActionCable.server.broadcast("answers:#{@answer.question_id}", ApplicationController.render(
-      partial: 'answers/non-author-answer',
-      locals: { answer: @answer, current_user: current_user }
-    ))
-  end
-
   def create
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
@@ -39,6 +30,15 @@ class AnswersController < ApplicationController
   end
 
   private
+  
+  def push_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("answers:#{@answer.question_id}", ApplicationController.render(
+      partial: 'answers/non-author-answer',
+      locals: { answer: @answer, current_user: current_user, comment: comment }
+    ))
+  end
 
   def author_actions
     unless current_user.author?(answer)
@@ -47,7 +47,7 @@ class AnswersController < ApplicationController
   end
 
   def comment
-    question.comments.new
+    answer.comments.new
   end
 
   def answer

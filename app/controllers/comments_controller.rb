@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  # after_action :push_comment, only: :create
+  after_action :push_comment, only: :create
 
   def create
     @comment = resource.comments.new(comment_params)
@@ -23,10 +23,11 @@ class CommentsController < ApplicationController
   def push_comment
     return if @comment.errors.any?
 
+    question_id = resource.class == Answer ? resource.question.id : resource.id
     ActionCable.server.broadcast(
-      "comments:#{@comment.question_id}", ApplicationController.render(
-        partial: 'comments/comment',
-        locals: { comment: @comment, current_user: current_user }
+      "comments:#{question_id}", ApplicationController.render(
+        partial: 'comments/non-author-comment',
+        locals: { comment: @comment, current_user: current_user, resource: resource.model_name.singular }
       )
     )
   end

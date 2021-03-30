@@ -12,10 +12,10 @@
     = render "shared/links", resource: question
   -if question.reward
     = render question.reward
-  %h2 Comments
-  .comments
-    = render question.comments
-  %h3 Leave your comment
+  %h5 Comments
+  .question-comments
+    = render question.comments.order_by_dt
+  %h6 Leave your comment
   = render 'comments/form', resource: question
   %h2 Answers
   .answers
