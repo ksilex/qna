@@ -1,0 +1,2 @@
+$('.<%=resource.model_name.singular%>-comment[data-link-id="<%=resource.id%>"]').hide()
+$('.<%=resource.model_name.singular%>-comment[data-link-id="<%=resource.id%>"]').after(`<%= render 'form' %>`)

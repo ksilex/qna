@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def comment
-    @comment ||= params[:id] ? Comment.find(params[:id]) : question.comments.new
+    @comment ||= resource.comments.new
   end
 
   helper_method :comment, :resource

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
   concern :comments do
-    resources :comments, only: :create
+    resources :comments, only: [:create, :new]
   end
   resources :questions, concerns: [:votes, :comments] do
     resources :answers, concerns: [:votes, :comments], shallow: true, except: %i[index show] do

@@ -3,4 +3,6 @@ $('.comment-errors[data-resource-id="<%=resource.id%>"]').html(`<%= render 'shar
   $('.<%=resource.model_name.singular%>[data-<%=resource.model_name.singular%>-id="<%=resource.id%>"] .<%=resource.model_name.singular%>-comments')
   .prepend('<%= j render comment %>')
   $(".comment-body").val('')
+  $('.comment-form').hide()
+  $('.<%=resource.model_name.singular%>-comment[data-link-id="<%=resource.id%>"]').show()
 <%end%>

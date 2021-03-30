@@ -15,8 +15,7 @@
   %h5 Comments
   .question-comments
     = render question.comments.order_by_dt
-  %h6 Leave your comment
-  = render 'comments/form', resource: question
+    =link_to 'Leave your comment', new_question_comment_path(question), remote: true, data: {link_id: question.id}, class: 'question-comment'
   %h2 Answers
   .answers
     = render question.answers.sort_by_best
