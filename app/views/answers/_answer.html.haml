@@ -14,3 +14,8 @@
     = render "shared/files", resource: answer
   -if answer.links.any?
     = render "shared/links", resource: answer
+  %h2 Comments
+  .comments
+    = render answer.comments
+  %h3 Leave your comment
+  = render 'comments/form', resource: answer

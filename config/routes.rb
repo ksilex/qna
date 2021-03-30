@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'comments/create'
   devise_for :users, controllers: { sessions: 'users/sessions' }
   devise_scope :user do
     get "profile", to: "users/sessions#profile"
@@ -11,8 +12,11 @@ Rails.application.routes.draw do
       delete :unvote
     end
   end
-  resources :questions, concerns: :votes do
-    resources :answers, concerns: :votes, shallow: true, except: %i[index show] do
+  concern :comments do
+    resources :comments, only: :create
+  end
+  resources :questions, concerns: [:votes, :comments] do
+    resources :answers, concerns: [:votes, :comments], shallow: true, except: %i[index show] do
       member do
         patch :best
       end

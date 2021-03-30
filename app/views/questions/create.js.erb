@@ -1,6 +1,6 @@
 $('.question-errors').html(`<%= render 'shared/errors', resource: question %>`)
 <%if question.persisted?%>
-  $('.questions').append('<%= j render question %>')
+  $('.questions').prepend('<%= j render question %>')
   $('#question_body').val('')
   $('#question_title').val('')
   $('.question-form').hide()

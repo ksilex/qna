@@ -1,0 +1,4 @@
+$('.comment-errors[data-resource-id="<%=resource.id%>"]').html(`<%= render 'shared/errors', resource: comment %>`)
+<%if comment.persisted?%>
+  $('.<%=resource.model_name.singular%>[data-<%=resource.model_name.singular%>-id="<%=resource.id%>"]').find('.comments').append('<%= j render comment %>')
+<%end%>

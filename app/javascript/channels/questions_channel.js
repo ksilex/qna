@@ -1,9 +1,7 @@
 import consumer from "./consumer"
-$(document).on('turbolinks:load', function(){
 consumer.subscriptions.create("QuestionsChannel", {
   connected() {
-    console.log("Connected to the room!");
-    // Called when the subscription is ready for use on the server
+    console.log("Connected to the question");
   },
 
   disconnected() {
@@ -11,9 +9,8 @@ consumer.subscriptions.create("QuestionsChannel", {
   },
 
   received(data) {
+    if (gon.current_user == $(data).filter('.question').data("userId")) return
     $('.questions').prepend(data);
-    console.log(data);
     // Called when there's incoming data on the websocket for this channel
   }
-});
 })

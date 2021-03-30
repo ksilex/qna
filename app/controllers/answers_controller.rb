@@ -3,9 +3,11 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :author_actions, only: [:edit, :update, :destroy]
-  after_action :dummy, only: :create
+  after_action :push_answer, only: :create
 
-  def dummy
+  def push_answer
+    return if @answer.errors.any?
+
     ActionCable.server.broadcast("answers:#{@answer.question_id}", ApplicationController.render(
       partial: 'answers/non-author-answer',
       locals: { answer: @answer, current_user: current_user }
@@ -44,11 +46,15 @@ class AnswersController < ApplicationController
     end
   end
 
+  def comment
+    question.comments.new
+  end
+
   def answer
     @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : question.answers.new
   end
 
-  helper_method :answer, :question
+  helper_method :answer, :question, :comment
 
   def question
     @question ||= params[:question_id] ? Question.find(params[:question_id]) : nil

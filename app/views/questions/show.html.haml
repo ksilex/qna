@@ -1,4 +1,4 @@
-.question{ "data-id": "#{question.id}"}
+.question{ "data-question-id": "#{question.id}"}
   %h1= question.title
   %div{class: "question-body #{question.id}"}
     = render "shared/voting", resource: question
@@ -12,6 +12,11 @@
     = render "shared/links", resource: question
   -if question.reward
     = render question.reward
+  %h2 Comments
+  .comments
+    = render question.comments
+  %h3 Leave your comment
+  = render 'comments/form', resource: question
   %h2 Answers
   .answers
     = render question.answers.sort_by_best

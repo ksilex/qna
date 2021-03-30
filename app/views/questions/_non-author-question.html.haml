@@ -1,2 +1,2 @@
-.question.mb-2{ "data-question-id": "#{question.id}" }
+.question.mb-2{ "data-question-id": "#{question.id}", "data-user-id": "#{question.user.id}" }
   =link_to question.title, question_path(question), class: 'title'
