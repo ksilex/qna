@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'comments/create'
   devise_for :users, controllers: { sessions: 'users/sessions' }
   devise_scope :user do
     get "profile", to: "users/sessions#profile"
