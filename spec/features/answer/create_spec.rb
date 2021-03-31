@@ -16,18 +16,30 @@ feature 'User can create an answer', %q{
 
       visit questions_path
       click_on question.title
+
+      Capybara.using_session('guest') do
+        visit questions_path
+        click_on question.title
+      end
     end
 
     scenario 'answers a question', js: true do
       fill_in 'Body', with: 'users answer'
       click_on 'Answer'
       expect(page).to have_content 'users answer'
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'users answer'
+      end
     end
 
     scenario 'answers with errors', js: true do
       click_on 'Answer'
-
       expect(page).to have_content "Body can't be blank"
+
+      Capybara.using_session('guest') do
+        expect(page).to_not have_selector '.answer'
+      end
     end
 
     scenario 'answers with attached file', js: true do
@@ -36,6 +48,12 @@ feature 'User can create an answer', %q{
       click_on 'Answer'
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'users answer'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
     end
 
     scenario 'answers with multiple links added', js: true do
@@ -51,6 +69,13 @@ feature 'User can create an answer', %q{
       within '.answers' do
         expect(page).to have_link 'My gist', href: gist_url
         expect(page).to have_link 'My gist 2', href: gist_url
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_link 'My gist', href: gist_url
+          expect(page).to have_link 'My gist 2', href: gist_url
+        end
       end
     end
   end

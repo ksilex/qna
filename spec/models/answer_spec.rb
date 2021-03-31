@@ -4,6 +4,7 @@ RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { should belong_to(:question) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:votes).dependent(:destroy) }
     it { should accept_nested_attributes_for :links }
     it 'have many attached files' do

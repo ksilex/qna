@@ -18,16 +18,32 @@ feature 'User can create question', %q{
     end
 
     scenario 'asks a question', js: true do
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'
       click_on 'Create Question'
       expect(page).to have_content 'Test question'
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Test question'
+      end
     end
 
     scenario 'asks a question with errors', js: true do
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
       click_on 'Create Question'
 
       expect(page).to have_content "Title can't be blank"
+
+      Capybara.using_session('guest') do
+        expect(page).to_not have_selector '.question'
+      end
     end
 
     scenario 'asks a question with attached file', js: true do

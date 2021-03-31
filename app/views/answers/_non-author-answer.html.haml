@@ -4,11 +4,18 @@
     .answer-text
       =answer.body
   -if answer.files.attached?
-    = render "shared/files", resource: answer, current_user: current_user
+    .files{ "data-files-id": "#{answer.id}" }
+      Files:
+      -answer.files.each do |file|
+        .file{ "data-file-id": "#{file.id}" }
+          =link_to file.filename.to_s, url_for(file)
   -if answer.links.any?
-    = render "shared/links", resource: answer, current_user: current_user
+    .links{ "data-links-id": "#{answer.id}" }
+      Links:
+      -answer.links.each do |link|
+        .link{ "data-link-id": "#{link.id}" }
+          =link_to link.name, link.url
   %h5 Comments
   .answer-comments
     = render answer.comments.order_by_dt
-  %h6 Leave your comment
-  = render 'comments/form', resource: answer, comment: comment
+    =link_to 'Leave your comment', new_answer_comment_path(answer), remote: true, data: {link_id: answer.id}, class: 'answer-comment'
