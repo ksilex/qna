@@ -139,6 +139,8 @@ GEM
     jmespath (1.4.0)
     launchy (2.5.0)
       addressable (~> 2.7)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -305,6 +307,7 @@ DEPENDENCIES
   haml-rails (~> 2.0)
   jbuilder (~> 2.7)
   launchy
+  letter_opener
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)

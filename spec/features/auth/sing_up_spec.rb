@@ -5,7 +5,7 @@ feature 'User can sign up', %q{
   As an unauthenticated user
   I'd like to be able to sign up
 } do
-  
+
   scenario 'User tries to sign up' do
     visit root_path
     click_on 'Sign Up'
@@ -13,7 +13,7 @@ feature 'User can sign up', %q{
     fill_in 'Password', with: '123456'
     fill_in 'Password confirmation', with: '123456'
     click_on 'Sign up'
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
   end
 
   scenario 'User tries to sign up with errors' do
