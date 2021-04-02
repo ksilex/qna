@@ -3,10 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-vkontakte'
+gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 gem 'gon'
 gem "cocoon"
 gem "aws-sdk-s3", require: false
-gem 'devise', '~> 4.7', '>= 4.7.3'
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
 gem 'haml'
 gem "haml-rails", "~> 2.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions', confirmations: 'confirmations' }
+  devise_for :users, controllers: { sessions: 'users/sessions', confirmations: 'confirmations',
+                                    omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     get "profile", to: "users/sessions#profile"
+    get "set_email", to: "users/omniauth_callbacks#set_email"
+    post "verified_oauth", to: "users/omniauth_callbacks#verified_oauth"
   end
   root to: "questions#index"
   concern :votes do

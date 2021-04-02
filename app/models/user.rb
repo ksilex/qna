@@ -6,7 +6,19 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+         :recoverable, :rememberable, :validatable,
+         :confirmable, :omniauthable, omniauth_providers: %i[vkontakte github]
+
+  def self.from_omniauth(auth)
+    account = where(provider: auth.provider, uid: auth.uid).first
+    return account if account
+    return 'has no email' unless auth.info.email
+
+    user = User.new(uid: auth.uid, provider: auth.provider, email: auth.info.email, password: Devise.friendly_token[0, 20])
+    user.skip_confirmation!
+    user.save
+    user
+  end
 
   def author?(instance)
     instance.user_id == id

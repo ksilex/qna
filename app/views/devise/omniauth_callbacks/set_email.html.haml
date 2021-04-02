@@ -1,0 +1,6 @@
+.set-email
+  %h2 Email comfirmation
+  %h3 Input your email for sending confirmation
+  = form_with url: verified_oauth_path, method: :post, local: true do |f|
+    = f.text_field :email, class: 'form-control', placeholder: true
+    = f.submit 'Send confirmation'
