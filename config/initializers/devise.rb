@@ -24,11 +24,15 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'devise@example.com'
 
-  config.omniauth :vkontakte, scope: "email"
+  config.omniauth :vkontakte, Rails.application.credentials.dig(:vk, :client_id), 
+                              Rails.application.credentials.dig(:vk, :client_secret), 
+                              scope: "email"
 
-  config.omniauth :github, scope: "user:email"
+  config.omniauth :github, Rails.application.credentials.dig(:github, :client_id), 
+                           Rails.application.credentials.dig(:github, :client_secret),
+                           scope: "user:email"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

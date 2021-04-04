@@ -18,12 +18,6 @@ feature 'User can sign in', %q{
     expect(page).to have_content 'Signed in successfully.'
   end
 
-  scenario 'log in user vkontakte' do
-    click_on 'Sign in with vk'
-    fill_in 'Email', with: user.email
-    click_on 'Send confirmation'
-  end
-
   scenario 'Unregistered user tries to sign in' do
     visit new_user_session_path
     fill_in 'Email', with: 'wrong@test.com'

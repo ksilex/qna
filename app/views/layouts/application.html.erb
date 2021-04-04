@@ -17,8 +17,6 @@
     <%= render "shared/navbar" %>
     <%= render "shared/flash" %>
     <div class="container-fluid">
-    <%= link_to "Sign in with vk", user_vkontakte_omniauth_authorize_path, method: :post %>
-    <%= link_to "Sign in with github", user_github_omniauth_authorize_path, method: :post %>
       <%= yield %>
     </div>
   </body>
