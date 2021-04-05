@@ -94,4 +94,34 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
   end
-end 
+
+  describe 'POST verified oauth' do
+    it 'saves user if email provided' do
+      controller.session[:uid] = '12345'
+      controller.session[:provider] = 'vkontakte'
+      expect { post :verified_oauth, params: { email: 'test@mail.com' }
+              }.to change(User, :count).by(1)
+    end
+
+    it 'does not saves user if no email provided' do
+      controller.session[:uid] = '12345'
+      controller.session[:provider] = 'vkontakte'
+      expect { post :verified_oauth
+              }.to_not change(User, :count)
+    end
+  end
+
+  describe 'GET set_email' do
+    it 'renders set email template' do
+      controller.session[:uid] = '12345'
+      controller.session[:provider] = 'vkontakte'
+      get :set_email
+      expect(response).to render_template :set_email
+    end
+
+    it 'can not be accessed directly' do
+      get :set_email
+      expect(response).to_not render_template :set_email
+    end
+  end
+end

@@ -13,7 +13,9 @@ feature 'User can sign up', %q{
     fill_in 'Password', with: '123456'
     fill_in 'Password confirmation', with: '123456'
     click_on 'Sign up'
-    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
+    open_email('test@test.com')
+    current_email.click_link 'Confirm'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
   end
 
   scenario 'User tries to sign up with errors' do
@@ -78,7 +80,7 @@ feature 'User can sign up', %q{
 
     context 'no email' do
       before { Rails.application.env_config["omniauth.auth"].info.email = nil }
-      
+
       scenario 'sign up user with no email provided' do
         visit new_user_session_path
         click_on 'Sign in with GitHub'
