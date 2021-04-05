@@ -6,6 +6,7 @@ ruby '2.7.1'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
+gem 'cancancan'
 gem 'gon'
 gem "cocoon"
 gem "aws-sdk-s3", require: false
