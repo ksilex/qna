@@ -3,7 +3,13 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
   after_action :push_question, only: :create
+
   authorize_resource
+
+  def edit
+    authorize! :edit, question
+  end
+
   def index
     @questions = Question.all.order(updated_at: :desc)
   end
@@ -20,6 +26,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, question
     question.destroy
     redirect_to questions_path, notice: 'Your question successfully deleted.'
   end

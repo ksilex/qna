@@ -6,6 +6,10 @@ class AnswersController < ApplicationController
 
   authorize_resource
 
+  def edit
+    authorize! :edit, answer
+  end
+
   def create
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
@@ -17,10 +21,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, answer
     answer.destroy
   end
 
   def best
+    authorize! :best, answer
     answer.mark_as_best
     @reward = answer.question.reward
     @answers = answer.question.answers.sort_by_best
