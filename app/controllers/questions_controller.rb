@@ -2,8 +2,8 @@ class QuestionsController < ApplicationController
   include VotingFeatureForControllers
 
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :author_actions, only: [:edit, :update, :destroy]
   after_action :push_question, only: :create
+  authorize_resource
   def index
     @questions = Question.all.order(updated_at: :desc)
   end
@@ -33,12 +33,6 @@ class QuestionsController < ApplicationController
       partial: 'questions/non-author-question',
       locals: { question: @question, current_user: current_user }
     ))
-  end
-
-  def author_actions
-    unless current_user.author?(question)
-      redirect_to questions_path, notice: "Can't perfom such action"
-    end
   end
 
   def question

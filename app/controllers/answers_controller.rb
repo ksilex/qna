@@ -2,8 +2,9 @@ class AnswersController < ApplicationController
   include VotingFeatureForControllers
 
   before_action :authenticate_user!
-  before_action :author_actions, only: [:edit, :update, :destroy]
   after_action :push_answer, only: :create
+
+  authorize_resource
 
   def create
     @answer = question.answers.new(answer_params)
@@ -20,17 +21,13 @@ class AnswersController < ApplicationController
   end
 
   def best
-    if current_user.author?(answer.question)
-      answer.mark_as_best
-      @reward = answer.question.reward
-      @answers = answer.question.answers.sort_by_best
-    else
-      redirect_to root_path, notice: 'Cant perfom such action'
-    end
+    answer.mark_as_best
+    @reward = answer.question.reward
+    @answers = answer.question.answers.sort_by_best
   end
 
   private
-  
+
   def push_answer
     return if @answer.errors.any?
 
@@ -38,12 +35,6 @@ class AnswersController < ApplicationController
       partial: 'answers/non-author-answer',
       locals: { answer: @answer, current_user: current_user, comment: comment }
     ))
-  end
-
-  def author_actions
-    unless current_user.author?(answer)
-      redirect_to root_path, notice: 'Cant perfom such action'
-    end
   end
 
   def comment
