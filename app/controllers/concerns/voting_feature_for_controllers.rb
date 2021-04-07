@@ -2,27 +2,19 @@ module VotingFeatureForControllers
   extend ActiveSupport::Concern
 
   def upvote
-    #authorize! :downvote, resource этот код делает с точки зрения системы то же самое что код ниже, но
-    # хуже - без оповещения юзера флэш сообщением + нужно переписывать другие тесты на тот же самый функционал
-    vote = resource.votes.new(user_id: current_user.id, vote_type: :upvote)
-    if vote.save
-      json_response('upvote')
-    else
-      resource_errors(vote, resource)
-    end
+    authorize! :upvote, resource
+    resource.votes.create(user_id: current_user.id, vote_type: :upvote)
+    json_response('upvote')
   end
 
   def downvote
-    #authorize! :downvote, resource
-    vote = resource.votes.new(user_id: current_user.id, vote_type: :downvote)
-    if vote.save
-      json_response('downvote')
-    else
-      resource_errors(vote, resource)
-    end
+    authorize! :downvote, resource
+    resource.votes.create(user_id: current_user.id, vote_type: :downvote)
+    json_response('downvote')
   end
 
   def unvote
+    authorize! :unvote, resource
     resource.votes.find_by(user_id: current_user.id)&.destroy
     json_response('unvote')
   end

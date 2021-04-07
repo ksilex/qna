@@ -4,8 +4,6 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   after_action :push_question, only: :create
 
-  skip_authorization_check
-
   def edit
     authorize! :edit, question
   end

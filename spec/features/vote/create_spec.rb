@@ -61,16 +61,20 @@ feature 'User can vote for best resource', %q{
         visit question_path(answer.question)
         within '.question-body' do
           page.find(:css, '.upvote-link').click
+          within '.vote-count' do
+            expect(page).to have_content '0', exact: true
+          end
         end
-        expect(page).to have_content 'No self-voting here'
       end
       scenario 'downvote' do
         login(answer.question.user)
         visit question_path(answer.question)
         within '.question-body' do
           page.find(:css, '.downvote-link').click
+          within '.vote-count' do
+            expect(page).to have_content '0', exact: true
+          end
         end
-        expect(page).to have_content 'No self-voting here'
       end
     end
     context 'does answer' do
@@ -125,16 +129,20 @@ feature 'User can vote for best resource', %q{
         visit question_path(answer.question)
         within '.answer-body' do
           page.find(:css, '.upvote-link').click
+          within '.vote-count' do
+            expect(page).to have_content '0', exact: true
+          end
         end
-        expect(page).to have_content 'No self-voting here'
       end
       scenario 'downvote' do
         login(answer.user)
         visit question_path(answer.question)
         within '.answer-body' do
           page.find(:css, '.downvote-link').click
+          within '.vote-count' do
+            expect(page).to have_content '0', exact: true
+          end
         end
-        expect(page).to have_content 'No self-voting here'
       end
     end
   end

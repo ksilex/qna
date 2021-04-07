@@ -2,7 +2,6 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  skip_authorization_check
   def profile
     if current_user
       @rewards = current_user.rewards

@@ -4,8 +4,6 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   after_action :push_answer, only: :create
 
-  skip_authorization_check
-
   def edit
     authorize! :edit, answer
   end
