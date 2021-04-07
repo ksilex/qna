@@ -4,19 +4,21 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   after_action :push_answer, only: :create
 
-  authorize_resource
+  skip_authorization_check
 
   def edit
     authorize! :edit, answer
   end
 
   def create
+    authorize! :create, answer
     @answer = question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
   end
 
   def update
+    authorize! :update, answer
     answer.update(answer_params)
   end
 

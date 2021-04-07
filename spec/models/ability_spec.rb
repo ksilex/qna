@@ -2,8 +2,6 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 describe Ability, type: :model do
-  include ControllerHelpers
-
   subject(:ability) { Ability.new(user) }
 
   describe 'for guest' do
@@ -39,6 +37,11 @@ describe Ability, type: :model do
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
+
+    it { should be_able_to :edit, question }
+    it { should be_able_to :edit, answer }
+    it { should_not be_able_to :edit, question_other }
+    it { should_not be_able_to :edit, answer_other }
 
     it { should be_able_to :update, question }
     it { should be_able_to :update, answer }

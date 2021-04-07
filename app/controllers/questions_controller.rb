@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   after_action :push_question, only: :create
 
-  authorize_resource
+  skip_authorization_check
 
   def edit
     authorize! :edit, question
@@ -18,10 +18,12 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    authorize! :create, question
     @question = current_user.questions.create(question_params)
   end
 
   def update
+    authorize! :update, question
     question.update(question_params)
   end
 
