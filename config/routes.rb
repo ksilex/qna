@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { sessions: 'users/sessions', confirmations: 'confirmations',
                                     omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
@@ -26,4 +27,12 @@ Rails.application.routes.draw do
   end
   resources :attachments, only: :destroy
   resources :links, only: :destroy
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [] do
+        get :me, on: :collection
+      end
+    end
+  end
 end

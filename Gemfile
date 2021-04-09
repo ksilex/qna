@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'doorkeeper'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'

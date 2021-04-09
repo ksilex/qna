@@ -122,6 +122,8 @@ GEM
     concurrent-ruby (1.1.8)
     crass (1.0.6)
     diff-lcs (1.4.4)
+    doorkeeper (5.5.1)
+      railties (>= 5)
     erubi (1.10.0)
     erubis (2.7.0)
     factory_bot (6.1.0)
@@ -352,6 +354,7 @@ DEPENDENCIES
   capybara-email
   cocoon
   devise!
+  doorkeeper
   factory_bot_rails
   gon
   haml
