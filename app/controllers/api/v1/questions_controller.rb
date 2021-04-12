@@ -5,6 +5,25 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def show
-    render json: Question.find(params[:id]), serializer: SingleQuestionSerializer
+    render json: question, serializer: SingleQuestionSerializer
+  end
+
+  def create
+    question = current_resource_owner.questions.new(question_params)
+    if question.save
+      render json: question
+    else
+      render json: { errors: question.errors.full_messages }
+    end
+  end
+
+  private
+
+  def question_params
+    params.permit(:title, :body, links_attributes: %i[name url id])
+  end
+
+  def question
+    @question ||= Question.find(params[:id])
   end
 end
