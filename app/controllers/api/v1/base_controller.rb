@@ -4,7 +4,7 @@ class Api::V1::BaseController < ApplicationController
 
   private
 
-  def current_resource_owner
-    @current_resource_owner ||= User.find_by(id: doorkeeper_token.resource_owner_id)
+  def current_user
+    @current_user ||= User.find_by(id: doorkeeper_token&.resource_owner_id)
   end
 end

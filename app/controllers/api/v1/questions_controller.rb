@@ -9,12 +9,22 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def create
-    question = current_resource_owner.questions.new(question_params)
-    if question.save
-      render json: question
+    @question = current_user.questions.new(question_params)
+    if @question.save
+      render json: @question
     else
-      render json: { errors: question.errors.full_messages }
+      render json: { errors: @question.errors.full_messages }
     end
+  end
+
+  def update
+    authorize! :update, question
+    question.update(question_params)
+  end
+
+  def destroy
+    authorize! :destroy, question
+    question.destroy
   end
 
   private

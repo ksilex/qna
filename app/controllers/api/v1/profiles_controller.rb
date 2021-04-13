@@ -1,10 +1,10 @@
 class Api::V1::ProfilesController < Api::V1::BaseController
   def me
-    render json: current_resource_owner
+    render json: current_user
   end
 
   def all
-    @users = User.where.not(id: current_resource_owner.id)
+    @users = User.where.not(id: current_user.id)
     render json: @users
   end
 end
