@@ -19,7 +19,11 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def update
     authorize! :update, question
-    question.update(question_params)
+    if question.update(question_params)
+      render json: question
+    else
+      render json: { errors: question.errors.full_messages }
+    end
   end
 
   def destroy
