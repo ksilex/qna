@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'whenever', require: false
+gem 'sinatra', require: false
 gem 'sidekiq'
 gem 'oj'
 gem 'active_model_serializers', '~> 0.10.12'

@@ -1,7 +1,7 @@
 class DailyDigestJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    sleep(3)
+  def perform
+    Services::DailyDigest.new.call
   end
 end
