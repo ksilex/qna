@@ -15,6 +15,8 @@ class Answer < ApplicationRecord
 
   scope :sort_by_best, -> { order(best: :desc) }
 
+  after_commit :trigger_created_answer_job
+
   def mark_as_best
     transaction do
       Answer.where(question_id: question_id).update_all(best: false)
@@ -25,5 +27,11 @@ class Answer < ApplicationRecord
 
   def one_best_answer
     errors.add(:best, "Can't mark multiple answers") if question.answers.where(best: true).count > 1
+  end
+
+  private
+
+  def trigger_created_answer_job
+    CreatedAnswersJob.perform_later(self)
   end
 end

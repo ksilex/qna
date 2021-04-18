@@ -16,6 +16,10 @@
   .question-comments
     = render question.comments.order_by_dt
     =link_to 'Leave your comment', new_question_comment_path(question), remote: true, data: {link_id: question.id}, class: 'question-comment'
+  -if current_user&.subscribed?(question)
+    =link_to 'Unsubscribe', unsubscribe_from_question_path(question), method: :delete
+  -else
+    =link_to 'Subscribe', subscribe_to_question_path(question), method: :post
   %h2 Answers
   .answers
     = render question.answers.sort_by_best

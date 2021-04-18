@@ -38,8 +38,6 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.delivery_method = :letter_opener
-
   config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.
@@ -76,15 +74,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    user_name: "testgurumailerheroku@gmail.com",
-    password: "testgurucringe322",
-    authentication: "plain",
-    enable_starttls_auto: true
-  }
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 end

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get "profile", to: "users/sessions#profile"
     get "set_email", to: "users/omniauth_callbacks#set_email"
     post "verified_oauth", to: "users/omniauth_callbacks#verified_oauth"
+    post "subscribe_to_question/:question_id", to: "users/sessions#subscribe_to_question", as: 'subscribe_to_question'
+    delete "unsubscribe_from_question/:question_id", to: "users/sessions#unsubscribe_from_question", as: 'unsubscribe_from_question'
   end
   root to: "questions#index"
   concern :votes do
