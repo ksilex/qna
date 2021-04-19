@@ -20,6 +20,9 @@ RSpec.describe Question, type: :model do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:body) }
   end
+ it 'saves sub' do
+  expect { create(:user) }.to change(Subscription, :count).by(1)
+ end
   it_should_behave_like 'Votes' do
     let(:model) { create(:question) }
   end
