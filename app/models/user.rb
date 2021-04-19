@@ -11,7 +11,7 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: %i[vkontakte github]
 
   def subscribed?(question)
-  subscriptions.find_by(question_id: question.id)
+    !!subscriptions.find_by(question_id: question.id)
   end
 
   def self.from_omniauth(auth)

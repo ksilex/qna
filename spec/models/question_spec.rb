@@ -16,13 +16,22 @@ RSpec.describe Question, type: :model do
       expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
   end
+
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:body) }
   end
- it 'saves sub' do
-  expect { create(:user) }.to change(Subscription, :count).by(1)
- end
+
+  describe 'methods' do
+    describe 'subscribe_author' do
+      let(:question) { create(:question) }
+
+      it 'makes author subscribe' do
+        expect(question.subscribers.count).to eq 1
+      end
+    end
+  end
+
   it_should_behave_like 'Votes' do
     let(:model) { create(:question) }
   end

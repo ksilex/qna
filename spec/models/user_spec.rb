@@ -9,6 +9,21 @@ RSpec.describe User, type: :model do
 
   describe 'methods' do
 
+    describe 'subscribed?' do
+      let(:question) { create(:question) }
+      let!(:subscription) { create(:subscription, user: user, question: question)}
+      let(:user) { create(:user) }
+      let(:other_user) { create(:user) }
+
+      it 'returns true if user subed' do
+        expect(user.subscribed?(question)).to be true
+      end
+
+      it 'returns false if user not subed' do
+        expect(other_user.subscribed?(question)).to be false
+      end
+    end
+
     describe '.from_omniauth' do
       let(:no_email_auth) { OmniAuth.config.add_mock(:vkontakte, {:uid => '12345', :provider => 'vkontakte'}) }
       let(:with_email) { OmniAuth.config.add_mock(:vkontakte, {:uid => '12345', :provider => 'vkontakte', :info => {:email => 'test@mail.com'}}) }
