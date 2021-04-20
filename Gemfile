@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'mysql2'
+gem 'thinking-sphinx'
 gem 'whenever', require: false
 gem 'sinatra', require: false
 gem 'sidekiq'
