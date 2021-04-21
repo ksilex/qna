@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :question do
     user
-    title { "MyString" }
+    title { "question_title" }
     body { "MyText" }
   end
 

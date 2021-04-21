@@ -1,0 +1,8 @@
+= form_with url: search_path, method: :get, class: "mb-2" do |f|
+  = f.text_field :query, class: 'form-control', placeholder: "Search"
+  Search in:
+  = f.collection_check_boxes :resources, Search::RESOURCES.map { |resource| [resource.pluralize, resource] }, :last, :first, include_hidden: false do |answer|
+    = answer.check_box(class: "form-check-input")
+    = answer.label(class: "form-check-label")
+  %br
+  = f.submit 'Search', class: 'btn btn-success'

@@ -1,0 +1,7 @@
+-if @result.nil?
+  Provide any search parameter first
+-else
+  - @result.each do |resource|
+    = render resource.class.name.downcase, resource: resource
+  -if @result.empty?
+    No matches

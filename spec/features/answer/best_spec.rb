@@ -18,7 +18,7 @@ feature 'User can select best answer', %q{
       click_on 'Mark as best'
       expect(page).to have_selector '.best-answer'
     end
-    
+
     describe 'multiple answers' do
       background do
         answer.mark_as_best
@@ -26,17 +26,17 @@ feature 'User can select best answer', %q{
         login(question.user)
         visit question_path(question)
       end
-      scenario 'selects other as best answer', js: true do 
+      scenario 'selects other as best answer', js: true do
         within "[data-answer-id='#{second_answer.id}']" do
           click_on 'Mark as best'
         end
 
         expect(page).to have_selector ".best-answer[data-answer-id='#{second_answer.id}']"
       end
-      scenario 'page has only one best answer' do 
+      scenario 'page has only one best answer' do
         expect(page).to have_selector '.best-answer', count: 1
       end
-      scenario 'best answer listed first' do 
+      scenario 'best answer listed first' do
         answers_list
         expect(page.find(:css, '.answer', match: :first)[:class]).to include 'best-answer'
       end
