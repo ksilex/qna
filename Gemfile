@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
-gem 'mini_racer'
 gem 'database_cleaner'
 gem 'mysql2'
 gem 'thinking-sphinx'
@@ -63,6 +62,7 @@ group :development do
   gem "capistrano-rails", require: false
   gem "capistrano-rvm", require: false
   gem "capistrano-passenger", require: false
+  gem 'capistrano-sidekiq', require: false
   gem "letter_opener"
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
