@@ -3,6 +3,7 @@ lock "~> 3.16.0"
 
 set :application, "qna"
 set :repo_url, "git://github.com/ksilex/qna.git"
+set :bundle_flags, "--deployment"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
