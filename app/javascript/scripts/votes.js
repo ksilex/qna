@@ -1,6 +1,7 @@
 $(document).on('turbolinks:load', function(){
-  $('.voting-links').on('ajax:success', function(e){
-      var xhr = e.detail[0];
+  $(document).on('ajax:success', function(e){
+      var xhr = e.detail[0]
+      if (!xhr.vote_type) return
       var sum = xhr.sum
       var resource = xhr.resource
       var resource_id = xhr.resource_id
