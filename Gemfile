@@ -9,7 +9,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'whenever', require: false
 gem 'sinatra', require: false
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.2', '>= 5.2.9'
 gem 'oj'
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'doorkeeper'
@@ -63,7 +63,7 @@ group :development do
   gem "capistrano-rails", require: false
   gem "capistrano-rvm", require: false
   gem "capistrano-passenger", require: false
-  gem 'capistrano-sidekiq', require: false
+  gem 'capistrano-sidekiq', '~> 1.0', '>= 1.0.3', require: false
   gem 'capistrano3-unicorn', require: false
   gem "letter_opener"
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
