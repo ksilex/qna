@@ -1,0 +1,28 @@
+Metrics/MethodLength:
+  Enabled: true
+  Max: 30
+  CountAsOne: []
+  IgnoredMethods: []
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: true
+  CountComments: false
+  Max: 1500
+  CountAsOne: []
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 30
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
