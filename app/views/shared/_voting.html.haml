@@ -1,17 +1,18 @@
-%div{class: "#{resource.model_name.singular} #{resource.id} voting-links"}
-  -if current_user&.upvoted?(resource)
-    = link_to polymorphic_path(resource, action: :unvote), method: :delete, remote: true, data: {type: :json}, class: "upvote-link active" do
-      %i.fas.fa-caret-square-up.fa-lg
-  -else
-    = link_to polymorphic_path(resource, action: :upvote), method: :post, remote: true, data: {type: :json}, class: "upvote-link" do
-      %i.fas.fa-caret-square-up.fa-lg
+- cache resource do
+  %div{class: "#{resource.model_name.singular} #{resource.id} voting-links"}
+    -if current_user&.upvoted?(resource)
+      = link_to polymorphic_path(resource, action: :unvote), method: :delete, remote: true, data: {type: :json}, class: "upvote-link active" do
+        %i.fas.fa-caret-square-up.fa-lg
+    -else
+      = link_to polymorphic_path(resource, action: :upvote), method: :post, remote: true, data: {type: :json}, class: "upvote-link" do
+        %i.fas.fa-caret-square-up.fa-lg
 
-  .vote-count
-    = resource.votes.summarize
+    .vote-count
+      = resource.votes.summarize
 
-  -if current_user&.downvoted?(resource)
-    = link_to polymorphic_path(resource, action: :unvote), method: :delete, remote: true, data: {type: :json}, class: "downvote-link active" do
-      %i.fas.fa-caret-square-down.fa-lg
-  -else
-    = link_to polymorphic_path(resource, action: :downvote), method: :post, remote: true, data: {type: :json}, class: "downvote-link" do
-      %i.fas.fa-caret-square-down.fa-lg
+    -if current_user&.downvoted?(resource)
+      = link_to polymorphic_path(resource, action: :unvote), method: :delete, remote: true, data: {type: :json}, class: "downvote-link active" do
+        %i.fas.fa-caret-square-down.fa-lg
+    -else
+      = link_to polymorphic_path(resource, action: :downvote), method: :post, remote: true, data: {type: :json}, class: "downvote-link" do
+        %i.fas.fa-caret-square-down.fa-lg

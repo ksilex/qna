@@ -1,2 +1,3 @@
-.comment.mb-2{ "data-comment-id": "#{comment.id}" }
-  =comment.body
+- cache comment do
+  .comment.mb-2{ "data-comment-id": "#{comment.id}" }
+    =comment.body

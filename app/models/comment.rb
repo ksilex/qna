@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :parent, polymorphic: true
+  belongs_to :parent, polymorphic: true, touch: true
 
   validates :body, presence: true
 

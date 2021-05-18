@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   after_action :push_comment, only: :create
 
   authorize_resource
-  
+
   def create
     @comment = resource.comments.new(comment_params)
     @comment.user = current_user
@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   private
 
   def resource
-    @resource = params[:answer_id] ? Answer.find(params[:answer_id]) : Question.find(params[:question_id])
+    @resource ||= params[:answer_id] ? Answer.find(params[:answer_id]) : Question.find(params[:question_id])
   end
 
   def comment
@@ -28,9 +28,9 @@ class CommentsController < ApplicationController
     question_id = resource.class == Answer ? resource.question.id : resource.id
     ActionCable.server.broadcast(
       "comments:#{question_id}", ApplicationController.render(
-        partial: 'comments/non-author-comment',
-        locals: { comment: @comment, current_user: current_user, resource: resource.model_name.singular }
-      )
+                                   partial: 'comments/non-author-comment',
+                                   locals:  { comment: @comment, current_user: current_user, resource: resource.model_name.singular }
+                                 )
     )
   end
 
