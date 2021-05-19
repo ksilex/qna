@@ -1,7 +1,7 @@
 class Reward < ApplicationRecord
   FILE_TYPES = %w[image/jpeg image/png image/gif].freeze
   belongs_to :user, optional: true
-  belongs_to :question
+  belongs_to :question, touch: true
 
   has_one_attached :file
 

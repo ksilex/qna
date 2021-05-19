@@ -1,27 +1,28 @@
-.question{ "data-question-id": "#{question.id}"}
-  %h1= question.title
-  %div{class: "question-body #{question.id}"}
-    = render "shared/voting", resource: question
-    .question-text
-      = question.body
-  -if current_user&.author?(question)
-    =link_to 'Delete Question', question, method: :delete
-  -if question.files.attached?
-    = render "shared/files", resource: question
-  -if question.links.any?
-    = render "shared/links", resource: question
-  -if question.reward
-    = render question.reward
-  %h5 Comments
-  .question-comments
-    = render question.comments.order_by_dt
-    =link_to 'Leave your comment', new_question_comment_path(question), remote: true, data: {link_id: question.id}, class: 'question-comment'
-  -if current_user&.subscribed?(question)
-    =link_to 'Unsubscribe', @subscription, method: :delete
-  -else
-    =link_to 'Subscribe', question_subscriptions_path(question), method: :post
-  %h2 Answers
-  .answers
-    = render question.answers.sort_by_best
-  %h3 Leave your answer
-  = render 'answers/form'
+- cache question do
+  .question{ "data-question-id": "#{question.id}"}
+    %h1= question.title
+    %div{class: "question-body #{question.id}"}
+      = render "shared/voting", resource: question
+      .question-text
+        = question.body
+    -if current_user&.author?(question)
+      =link_to 'Delete Question', question, method: :delete
+    -if question.files.attached?
+      = render "shared/files", resource: question
+    -if question.links.any?
+      = render "shared/links", resource: question
+    -if question.reward
+      = render question.reward
+    %h5 Comments
+    .question-comments
+      = render question.comments.order_by_dt
+      =link_to 'Leave your comment', new_question_comment_path(question), remote: true, data: {link_id: question.id}, class: 'question-comment'
+    -if current_user&.subscribed?(question)
+      =link_to 'Unsubscribe', @subscription, method: :delete
+    -else
+      =link_to 'Subscribe', question_subscriptions_path(question), method: :post
+    %h2 Answers
+    .answers
+      = render question.answers.sort_by_best
+    %h3 Leave your answer
+    = render 'answers/form'

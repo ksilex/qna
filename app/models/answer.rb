@@ -1,7 +1,7 @@
 class Answer < ApplicationRecord
   include HasVotes
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
   has_many :links, dependent: :destroy, as: :parent
   has_many :comments, dependent: :destroy, as: :parent
@@ -23,7 +23,7 @@ class Answer < ApplicationRecord
       update!(best: true)
       question&.reward&.update!(user_id: user_id)
     end
-	end
+  end
 
   def one_best_answer
     errors.add(:best, "Can't mark multiple answers") if question.answers.where(best: true).count > 1

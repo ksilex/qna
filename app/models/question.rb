@@ -16,10 +16,9 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_commit :subscribe_author
+  after_create_commit :subscribe_author
 
   def subscribe_author
     user.subscriptions.create(question_id: id)
   end
-
 end

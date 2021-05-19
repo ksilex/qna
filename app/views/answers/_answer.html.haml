@@ -1,20 +1,21 @@
-.answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best?) }
-  %div{class: "answer-body #{answer.id}"}
-    -if answer.best?
-      %i.fas.fa-check.fa-lg
-    = render "shared/voting", resource: answer
-    .answer-text
-      =answer.body
-  -if current_user&.author?(answer)
-    =link_to 'Edit Answer', edit_answer_path(answer), data: {link_id: answer.id}, remote: true, class: 'answer-link'
-    =link_to 'Delete Answer', answer, method: :delete , remote: true
-  -if current_user&.author?(answer.question) && !answer.best
-    =link_to 'Mark as best', best_answer_path(answer), method: :patch, remote: true
-  -if answer.files.attached?
-    = render "shared/files", resource: answer
-  -if answer.links.any?
-    = render "shared/links", resource: answer
-  %h5 Comments
-  .answer-comments
-    = render answer.comments.order_by_dt
-    =link_to 'Leave your comment', new_answer_comment_path(answer), remote: true, data: {link_id: answer.id}, class: 'answer-comment'
+- cache answer do
+  .answer.mb-2{ "data-answer-id": "#{answer.id}", class: ("best-answer" if answer.best?) }
+    %div{class: "answer-body #{answer.id}"}
+      -if answer.best?
+        %i.fas.fa-check.fa-lg
+      = render "shared/voting", resource: answer
+      .answer-text
+        =answer.body
+    -if current_user&.author?(answer)
+      =link_to 'Edit Answer', edit_answer_path(answer), data: {link_id: answer.id}, remote: true, class: 'answer-link'
+      =link_to 'Delete Answer', answer, method: :delete , remote: true
+    -if current_user&.author?(answer.question) && !answer.best
+      =link_to 'Mark as best', best_answer_path(answer), method: :patch, remote: true
+    -if answer.files.attached?
+      = render "shared/files", resource: answer
+    -if answer.links.any?
+      = render "shared/links", resource: answer
+    %h5 Comments
+    .answer-comments
+      = render answer.comments.order_by_dt
+      =link_to 'Leave your comment', new_answer_comment_path(answer), remote: true, data: {link_id: answer.id}, class: 'answer-comment'

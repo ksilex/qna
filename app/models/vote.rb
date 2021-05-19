@@ -1,6 +1,6 @@
 class Vote < ApplicationRecord
   belongs_to :user
-  belongs_to :parent, polymorphic: true
+  belongs_to :parent, polymorphic: true, touch: true
 
   validates :vote_type, presence: true
   validate :cant_self_vote
