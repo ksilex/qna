@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers) {  { "ACCEPT" => 'application/json' } }
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
 
   describe 'GET /api/v1/questions' do
     let(:api_path) { '/api/v1/questions' }
@@ -14,7 +14,7 @@ describe 'Questions API', type: :request do
       let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
-      let(:question_response) { json['questions'].first }
+      let(:question_response) { json['questions'].last }
       let!(:answers) { create_list(:answer, 2, question: question) }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
@@ -179,9 +179,10 @@ describe 'Questions API', type: :request do
 
     context 'authorized as user' do
       it 'returns 403' do
-        expect { put api_path, params: { id: question.id, title: 'edited title', access_token: access_token_other.token },
-                               headers: headers
-                }.to_not change(question, :title)
+        expect do
+          put api_path, params:  { id: question.id, title: 'edited title', access_token: access_token_other.token },
+                        headers: headers
+        end.to_not change(question, :title)
         expect(response.status).to eq 403
       end
     end
